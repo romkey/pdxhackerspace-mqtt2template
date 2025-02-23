@@ -1,0 +1,47 @@
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3">
+		<div class="image-container">
+		    <h1 class="text-center"><%= name %></h1>
+
+<% image_file_path = "/output/printers/#{image_path}" %>
+<% border_color = File.exist?(image_file_path) && (Time.now - File.mtime(image_file_path) < 180) ? "success" : "danger" %>
+
+                    <a href="<%= image_path %>?x=<%= Time.now.to_i %>" data-toggle="lightbox" data-gallery="printers">
+                        <img camera src="<%= image_path %>?x=<%= Time.now.to_i %>" alt="<%= name %>" class="rotate-90 figure-img img-fluid rounded-2 border border-3 border-<%= border_color %>" onerror="this.onerror=null; this.src='test-screen.jpg';">
+                    </a>
+
+<% if data["available"] %>
+          <p class="text-center">
+	    <%= data["state"] %>
+	  </p>
+          <p class="text-center" style="overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= data["filename"] %>">
+	    <%= data["filename"] %>
+	  </p>
+          <div class="progress" role="progressbar" aria-label="Example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+	    <div class="progress-bar" style="width: <%= data["progress"] %>%"><%= data["progress"].to_i %>%</div>
+	  </div>
+
+<% if data["state"] != "finished" %>
+<%
+  seconds_in = data["seconds_until_completion"]
+  days = seconds_in / 86_400
+  seconds = seconds_in % 86_400
+  hours = seconds_in / 3_600
+  seconds %= 3_600
+  minutes = seconds_in / 60
+  seconds %= 60
+
+  parts = []
+  parts << "#{days}d" if days > 0
+  parts << "#{hours}h" if hours > 0
+  parts << "#{minutes}m" if minutes > 0
+  parts << "#{seconds}s" if seconds > 0
+%>
+  ETA: <%= parts.join(' ') %> at <%= (Time.now + seconds_in).strftime("%Y-%m-%d %H:%M:%S") %>
+<% end %>
+<% else %>
+<p class="text-center">
+<b>OFFLINE</b>
+</p>
+<% end %>
+		</div>
+            </div>

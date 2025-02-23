@@ -1,0 +1,49 @@
+<% def f_to_c(f)
+   return ((f.to_f - 32) * 5.0 / 9).to_i
+ end
+%>
+
+            <div class="col-6 col-md-3 col-lg-3 col-xl-3">
+<% if data["available"] %>
+              <p>
+                <table class="table caption-top">
+                  <caption>Temperatures °C</caption>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Bed</th>
+                      <td><%= f_to_c(data["temperatures"]["bed"]) %></td>
+                    </tr>
+                    <tr>
+                      <th scope="nozzle">Nozzle</th>
+                      <td><%= f_to_c(data["temperatures"]["nozzle"]) %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Enclosure</th>
+                      <td><%= data["temperatures"]["enclosure"] == 0 ? "n/a" : f_to_c(data["temperatures"]["enclosure"]) %></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Ambient</th>
+                      <td><%= f_to_c(data["temperatures"]["ambient"]) %></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                  <svg class="custom-icon spin" width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="75" cy="75" r="60" stroke="white" stroke-width="6" fill="none"/>
+                    <circle cx="75" cy="75" r="15" stroke="white" stroke-width="6" fill="none"/>
+                    <line x1="35" y1="50" x2="115" y2="50" stroke="white" stroke-width="4"/>
+                    <line x1="30" y1="75" x2="120" y2="75" stroke="white" stroke-width="4"/>
+                    <line x1="35" y1="100" x2="115" y2="100" stroke="white" stroke-width="4"/>
+                  </svg>
+                  <%= data["material"] %>
+                  <svg class="custom-icon" width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="20" width="50" height="30" stroke="white" stroke-width="5" fill="none"/>
+                    <polygon points="50,50 100,50 75,100" stroke="white" stroke-width="5" fill="none"/>
+                    <line x1="70" y1="100" x2="70" y2="130" stroke="white" stroke-width="4"/>
+                    <line x1="75" y1="100" x2="75" y2="140" stroke="white" stroke-width="4"/>
+                    <line x1="80" y1="100" x2="80" y2="130" stroke="white" stroke-width="4"/>
+                  </svg>
+		   <%= data["nozzle"] %>mm
+		 </p>
+<% end %>
+            </div>

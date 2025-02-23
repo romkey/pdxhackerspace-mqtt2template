@@ -1,0 +1,11 @@
+server {
+  listen 81;
+
+  location / {
+      root /usr/share/nginx/html/printers;
+      index index.html;
+  }
+
+  error_log /var/log/nginx/printers-error.log debug;
+  access_log /var/log/nginx/printers-access.log;
+}

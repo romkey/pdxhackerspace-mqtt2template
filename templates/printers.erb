@@ -1,0 +1,75 @@
+<%
+_printer = ERB.new(File.new("/templates/_printer.erb").read)
+_printer_misc = ERB.new(File.new("/templates/_printer_misc.erb").read)
+%>
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PDX Hackerspace 3D Printers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .image-container img {
+            width: 100%;
+            height: auto;
+            max-width: 500px; /* Set a max size for the image */
+            min-width: 100px;  /* Set a min size for the image */
+        }
+	.custom-icon {
+	  width: 2em;
+          height: 2em;
+        }
+	.spin {
+	  animation spin 2s linear infinite;
+	}
+	@keyframes spin {
+	  from {
+	      transform: rotate(0deg);
+          }
+	  to {
+	      transform: rotate(360deg);
+          }
+	}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row text-center">
+        <h1>PDX Hackerspace Outside 3D Printers</h1>
+	<p>
+          <% now = Time.now %>
+          <%= now.strftime('%H:%M:%S') %> <%= now.strftime('%A') %> <%= now.strftime('%Y-%m-%d') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row">
+
+        <%= _printer.result_with_hash(name: "Prusa-1", image_path: "images/prusa-1.jpg", data: prusa1) %>
+        <%= _printer.result_with_hash(name: "Prusa-2", image_path: "test-screen.jpg", data: prusa2) %>
+        <%= _printer.result_with_hash(name: "Prusa-3", image_path: "images/prusa-3.jpg", data: prusa3) %>
+        <%= _printer.result_with_hash(name: "Prusa XL", image_path: "test-screen.jpg", data: prusaxl) %>
+
+      </div>
+      <div class="row">
+
+        <%= _printer_misc.result_with_hash(name: "Prusa-1", image_path: "images/prusa-1.jpg", data: prusa1) %>
+        <%= _printer_misc.result_with_hash(name: "Prusa-2", image_path: "test-screen.jpg", data: prusa2) %>
+        <%= _printer_misc.result_with_hash(name: "Prusa-3", image_path: "images/prusa-3.jpg", data: prusa3) %>
+        <%= _printer_misc.result_with_hash(name: "Prusa XL", image_path: "test-screen.jpg", data: prusaxl) %>
+
+      </div>
+      <div class="row">
+      	 <p class="text-center">
+	   PDX Hackerspace 3D Printing <a href="https://wiki.pdxhackerspace.org/3dprinters/overview">Guide</a> | <a href="https://wiki.pdxhackerspace.org/en/3dprinters/FAQ">FAQ</a>
+         </p>
+	 <p class="text-center">
+	   <a href="">Implementation on Github</a>
+         </p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

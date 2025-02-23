@@ -1,0 +1,11 @@
+server {
+  listen 80;
+
+  location / {
+      root /usr/share/nginx/html/outside;
+      index index.html;
+  }
+
+  error_log /var/log/nginx/outside-error.log debug;
+  access_log /var/log/nginx/outside-access.log;
+}
