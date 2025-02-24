@@ -16,11 +16,10 @@
           <p class="text-center" style="overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= data["filename"] %>">
 	    <%= data["filename"] %>
 	  </p>
+<% if data["state"] != "printing" %>
           <div class="progress" role="progressbar" aria-label="Example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
 	    <div class="progress-bar" style="width: <%= data["progress"] %>%"><%= data["progress"].to_i %>%</div>
 	  </div>
-
-<% if data["state"] != "finished" %>
 <%
   seconds_in = data["seconds_until_completion"]
   days = seconds_in / 86_400
