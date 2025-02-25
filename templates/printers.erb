@@ -32,11 +32,23 @@ _printer_misc = ERB.new(File.new("/templates/_printer_misc.erb").read)
           }
 	}
     </style>
+    <script>
+        // Check if URL contains ?reload=1
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('reload') && urlParams.get('reload') === '1') {
+                // Set an interval to reload the page every 60 seconds (60000 milliseconds)
+                setInterval(function() {
+                    location.reload();  // Reload the page
+                }, 60000);
+            }
+        };
+    </script>
   </head>
   <body>
     <div class="container">
       <div class="row text-center">
-        <h1>PDX Hackerspace Outside 3D Printers</h1>
+        <h1>PDX Hackerspace 3D Printers</h1>
 	<p>
           <% now = Time.now %>
           <%= now.strftime('%H:%M:%S') %> <%= now.strftime('%A') %> <%= now.strftime('%Y-%m-%d') %>
@@ -66,7 +78,7 @@ _printer_misc = ERB.new(File.new("/templates/_printer_misc.erb").read)
 	   PDX Hackerspace 3D Printing <a href="https://wiki.pdxhackerspace.org/3dprinters/overview">Guide</a> | <a href="https://wiki.pdxhackerspace.org/en/3dprinters/FAQ">FAQ</a>
          </p>
 	 <p class="text-center">
-	   <a href="">Implementation on Github</a>
+	   <a href="https://github.com/romkey/pdxhackerspace-mqtt2template">Implementation on Github</a>
          </p>
       </div>
     </div>
