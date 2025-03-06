@@ -1,14 +1,30 @@
 {
-  "mqtt_broker_url": "mqtt://MQTT_USERNAME:MQTT_PASSWORD@MQTT_BROKER_NAME:1883",
+  "mqtt_broker_url": "mqtt://MQTT_USERNAME:MQTT_PASSWORD@MQTT_BROKER:MQTT_PORT",
   "verbose": true,
   "topics": {
-    "mqtt2template/outside": {
-      "template": "/templates/outside.erb",
-      "output": "/output/outside/index.html"
-    },
-    "mqtt2template/printers": {
-      "template": "/templates/printers.erb",
-      "output": "/output/printers/index.html"
-    }
+      "mqtt2template/outside": {
+	  "templates": [
+	      {
+		  "template": "/templates/outside.erb",
+		  "output": "/output/outside/index.html"
+	      },
+	      {
+		  "template": "/templates/data.erb",
+		  "output": "/output/outside/data.json"
+	      }
+	  ]
+      },
+      "mqtt2template/printers": {
+	  "templates": [
+	      {
+		  "template": "/templates/printers.erb",
+		  "output": "/output/printers/index.html"
+	      },
+	      {
+		  "template": "/templates/data.erb",
+		  "output": "/output/printers/data.json"
+	      }
+	  ]
+      }
   }
 }

@@ -6,7 +6,7 @@
 <% border_color = File.exist?(image_file_path) && (Time.now - File.mtime(image_file_path) < 180) ? "success" : "danger" %>
 
                         <a href="<%= image_path %>?x=<%= Time.now.to_i %>" data-toggle="lightbox" data-gallery="outside">
-                            <img camera src="<%= image_path %>?x=<%= Time.now.to_i %>" alt="<%= name %>" class="figure-img img-fluid rounded-2 border border-2 border-<%= border_color %>" onerror="this.onerror=null; this.src='test-screen.jpg';">
+                            <img camera src="<%= image_path %>?x=<%= Time.now.to_i %>" alt="<%= name %>" class="auto-refresh figure-img img-fluid rounded-2 border border-2" onerror="this.onerror=null; this.src='test-screen.jpg';">
 			</a>
 			<figcaption class="figure-caption text-center"><%= name %></figcaption>
 		    </figure>

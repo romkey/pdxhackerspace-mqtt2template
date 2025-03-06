@@ -17,25 +17,82 @@
         }
     </style>
     <script>
-        // Check if URL contains ?reload=1
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('reload') && urlParams.get('reload') === '1') {
-                // Set an interval to reload the page every 60 seconds (60000 milliseconds)
-                setInterval(function() {
-                    location.reload();  // Reload the page
-                }, 60000);
+function reloadImagesBySelector(selector) {
+  const images = document.querySelectorAll(selector);
+  images.forEach(img => {
+    const src = img.src;
+    img.src = '';
+    // Force browser to fetch the image again by adding a cache-busting parameter
+    img.src = src.includes('?') 
+      ? src.split('?')[0] + '?cache=' + new Date().getTime() 
+      : src + '?cache=' + new Date().getTime();
+  });
+}
+
+setInterval(() => {
+    console.log(`Reloading images matching ".auto-refresh" at ${new Date().toLocaleTimeString()}`);
+    reloadImagesBySelector(".auto-refresh");
+    console.log('Updating JSON');
+    fetchAndUpdateData();
+  }, 60000);
+
+        function updateElementsWithJsonData(jsonData) {
+            const elements = document.querySelectorAll('[data-json-key]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-json-key');
+                
+                if (key in jsonData) {
+                    // Update the element's content with the JSON value
+                    element.textContent = jsonData[key];
+                }
+            });
+        }
+
+        async function fetchAndUpdateData() {
+            const urlInput = "http://outside.ctrlh/data.json";
+
+            try {
+                const response = await fetch(urlInput);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+	    	console.log("fetching JSON successful");
+	                
+                const jsonData = await response.json();
+                updateElementsWithJsonData(jsonData);
+
+                const timestampElements = document.querySelectorAll('[data-json-key="timestamp"]');
+
+		const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(now);
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const formattedTime = `${hours}:${minutes}:${seconds} ${dayOfWeek} ${year}-${month}-${day}`;
+
+                timestampElements.forEach(element => {
+                    element.textContent = formattedTime;
+                });
+            } catch (error) {
+                console.error('Error fetching JSON:', error);
             }
-        };
-    </script>  </head>
+        }
+    </script>
+  </head>
   <body>
     <div class="container">
       <div class="row text-center">
         <h1>PDX Hackerspace Outside Cameras</h1>
-	<p><%= temperature %>°F <%= humidity %>% <%= conditions %></p>
+	<p><span data-json-key="temperature"><%= data["temperature"] %></span>°F <span data-json-key="humidity"><%= data["humidity"] %></span>% <span data-json-key="conditions"><%= data["conditions"] %></span></p>
 	<p>
           <% now = Time.now %>
-          <%= now.strftime('%H:%M:%S') %> <%= now.strftime('%A') %> <%= now.strftime('%Y-%m-%d') %>
+          <span data-json-key='timestamp'><%= now.strftime('%H:%M:%S') %> <%= now.strftime('%A') %> <%= now.strftime('%Y-%m-%d') %></span>
         </p>
       </div>
     </div>

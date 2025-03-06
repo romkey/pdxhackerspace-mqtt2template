@@ -33,10 +33,10 @@ _printer_misc = ERB.new(File.new("/templates/_printer_misc.erb").read)
 	}
     </style>
     <script>
-        // Check if URL contains ?reload=1
+        // Check if URL contains ?autoreload=1
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('reload') && urlParams.get('reload') === '1') {
+            if (urlParams.has('autoreload') && urlParams.get('autoreload') === '1') {
                 // Set an interval to reload the page every 60 seconds (60000 milliseconds)
                 setInterval(function() {
                     location.reload();  // Reload the page
@@ -73,6 +73,7 @@ _printer_misc = ERB.new(File.new("/templates/_printer_misc.erb").read)
         <%= _printer_misc.result_with_hash(name: "Prusa XL", image_path: "test-screen.jpg", data: prusaxl) %>
 
       </div>
+
       <div class="row">
       	 <p class="text-center">
 	   PDX Hackerspace 3D Printing <a href="https://wiki.pdxhackerspace.org/3dprinters/overview">Guide</a> | <a href="https://wiki.pdxhackerspace.org/en/3dprinters/FAQ">FAQ</a>
